@@ -54,24 +54,18 @@ export default function MainTab() {
         ),
 
         tabBarActiveTintColor: "#2563EB",
-
         tabBarInactiveTintColor: "#64748B",
 
         tabBarStyle: {
           backgroundColor: "#fff",
-
           borderTopWidth: 1,
-
           borderTopColor: "#E2E8F0",
-
           paddingTop: 4,
-
           height: 60,
         },
 
         tabBarLabelStyle: {
           fontSize: 11,
-
           fontWeight: "500",
         },
 
