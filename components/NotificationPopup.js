@@ -1,30 +1,41 @@
-import { FlatList, Modal, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import {
+  FlatList,
+  Modal,
+  Pressable,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
-import { colors, spacing } from '../constants/theme';
+import { useTheme } from "../context/ThemeContext";
 
 const notifications = [
   {
-    id: '1',
-    title: 'Order shipped',
-    message: 'Your order #102 is on the way and should arrive tomorrow.',
-    time: '2h ago',
+    id: "1",
+    title: "Order shipped",
+    message: "Your order #102 is on the way and should arrive tomorrow.",
+    time: "2h ago",
   },
   {
-    id: '2',
-    title: 'Flash sale',
-    message: '50% off select headphones for the next 3 hours.',
-    time: '4h ago',
+    id: "2",
+    title: "Flash sale",
+    message: "50% off select headphones for the next 3 hours.",
+    time: "4h ago",
   },
   {
-    id: '3',
-    title: 'New arrival',
-    message: 'Check out the latest products in your favorite category.',
-    time: '1d ago',
+    id: "3",
+    title: "New arrival",
+    message: "Check out the latest products in your favorite category.",
+    time: "1d ago",
   },
 ];
 
 export default function NotificationPopup({ visible, onClose }) {
+  const { colors, spacing, isDarkMode } = useTheme();
+  const styles = createStyles(colors, spacing, isDarkMode);
+
   return (
     <Modal visible={visible} transparent animationType="fade">
       <Pressable style={styles.overlay} onPress={onClose}>
@@ -44,8 +55,14 @@ export default function NotificationPopup({ visible, onClose }) {
             keyExtractor={(item) => item.id}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.list}
-            renderItem={({ item }) => (
-              <View style={styles.notificationItem}>
+            renderItem={({ item, index }) => (
+              <View 
+                style={[
+                  styles.notificationItem,
+                  // ✅ Clean layout tweak: removes the bottom separator line for the last item
+                  index === notifications.length - 1 && { borderBottomWidth: 0 }
+                ]}
+              >
                 <View style={styles.notificationMark} />
                 <View style={styles.notificationText}>
                   <Text style={styles.notificationTitle}>{item.title}</Text>
@@ -66,88 +83,90 @@ export default function NotificationPopup({ visible, onClose }) {
   );
 }
 
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(15, 23, 42, 0.45)',
-    justifyContent: 'center',
-    padding: spacing.md,
-  },
-  popup: {
-    backgroundColor: colors.surface,
-    borderRadius: 20,
-    overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: colors.border,
-    maxHeight: '80%',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: colors.text,
-  },
-  subtitle: {
-    fontSize: 13,
-    color: colors.textSecondary,
-    marginTop: spacing.xs,
-  },
-  closeButton: {
-    width: 36,
-    height: 36,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  list: {
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-  },
-  notificationItem: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: spacing.sm,
-    paddingVertical: spacing.sm,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-  },
-  notificationMark: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: colors.primary,
-    marginTop: 6,
-  },
-  notificationText: {
-    flex: 1,
-  },
-  notificationTitle: {
-    fontSize: 15,
-    fontWeight: '700',
-    color: colors.text,
-  },
-  notificationMessage: {
-    fontSize: 13,
-    color: colors.textSecondary,
-    marginTop: spacing.xs,
-  },
-  notificationTime: {
-    fontSize: 12,
-    color: colors.textSecondary,
-  },
-  emptyState: {
-    alignItems: 'center',
-    paddingVertical: spacing.lg,
-  },
-  emptyText: {
-    fontSize: 14,
-    color: colors.textSecondary,
-  },
-});
+function createStyles(colors, spacing, isDarkMode) {
+  return StyleSheet.create({
+    overlay: {
+      flex: 1,
+      backgroundColor: isDarkMode ? "rgba(0, 0, 0, 0.65)" : "rgba(15, 23, 42, 0.4)",
+      justifyContent: "center",
+      padding: spacing.md,
+    },
+    popup: {
+      backgroundColor: colors.surface,
+      borderRadius: 20,
+      overflow: "hidden",
+      borderWidth: 1,
+      borderColor: colors.border,
+      maxHeight: "80%",
+    },
+    header: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      padding: spacing.md,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.border,
+    },
+    title: {
+      fontSize: 18,
+      fontWeight: "700",
+      color: colors.text,
+    },
+    subtitle: {
+      fontSize: 13,
+      color: colors.textSecondary,
+      marginTop: spacing.xs,
+    },
+    closeButton: {
+      width: 36,
+      height: 36,
+      borderRadius: 12,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    list: {
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.sm,
+    },
+    notificationItem: {
+      flexDirection: "row",
+      alignItems: "flex-start",
+      gap: spacing.sm,
+      paddingVertical: spacing.sm,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.border,
+    },
+    notificationMark: {
+      width: 10,
+      height: 10,
+      borderRadius: 5,
+      backgroundColor: colors.primary,
+      marginTop: 6,
+    },
+    notificationText: {
+      flex: 1,
+    },
+    notificationTitle: {
+      fontSize: 15,
+      fontWeight: "700",
+      color: colors.text,
+    },
+    notificationMessage: {
+      fontSize: 13,
+      color: colors.textSecondary,
+      marginTop: spacing.xs,
+    },
+    notificationTime: {
+      fontSize: 12,
+      color: colors.textSecondary,
+    },
+    emptyState: {
+      alignItems: "center",
+      paddingVertical: spacing.lg,
+    },
+    emptyText: {
+      fontSize: 14,
+      color: colors.textSecondary,
+    },
+  });
+}

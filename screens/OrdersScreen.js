@@ -1,7 +1,7 @@
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import { colors, spacing } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 
 const orders = [
   {
@@ -23,6 +23,9 @@ const orders = [
 ];
 
 export default function OrdersScreen() {
+  const { colors, spacing } = useTheme();
+  const styles = createStyles(colors, spacing);
+
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <Text style={styles.title}>My Orders</Text>
@@ -66,96 +69,98 @@ export default function OrdersScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: colors.text,
-    paddingHorizontal: spacing.md,
-    paddingTop: spacing.sm,
-    marginBottom: spacing.md,
-  },
-  list: {
-    paddingHorizontal: spacing.md,
-    paddingBottom: spacing.lg,
-  },
-  orderCard: {
-    backgroundColor: colors.surface,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: colors.border,
-    padding: spacing.md,
-    marginBottom: spacing.md,
-  },
-  orderHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: spacing.sm,
-  },
-  orderLabel: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: colors.text,
-  },
-  orderMeta: {
-    fontSize: 13,
-    color: colors.textSecondary,
-    marginTop: spacing.xs,
-  },
-  orderStatus: {
-    fontSize: 12,
-    fontWeight: '700',
-    color: colors.primary,
-    textTransform: 'uppercase',
-  },
-  orderTotal: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: colors.text,
-    marginBottom: spacing.md,
-  },
-  trackingRow: {
-    gap: spacing.xs,
-  },
-  trackingStep: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.xs,
-  },
-  stepDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: colors.primary,
-  },
-  stepText: {
-    fontSize: 13,
-    color: colors.textSecondary,
-  },
-  stepLine: {
-    flex: 1,
-    height: 1,
-    backgroundColor: colors.border,
-  },
-  emptyState: {
-    marginTop: spacing.lg,
-    alignItems: 'center',
-  },
-  emptyText: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: colors.text,
-    marginTop: spacing.md,
-  },
-  emptySubtitle: {
-    fontSize: 14,
-    color: colors.textSecondary,
-    marginTop: spacing.xs,
-    textAlign: 'center',
-  },
-});
+function createStyles(colors, spacing) {
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: '700',
+      color: colors.text,
+      paddingHorizontal: spacing.md,
+      paddingTop: spacing.sm,
+      marginBottom: spacing.md,
+    },
+    list: {
+      paddingHorizontal: spacing.md,
+      paddingBottom: spacing.lg,
+    },
+    orderCard: {
+      backgroundColor: colors.surface,
+      borderRadius: 16,
+      borderWidth: 1,
+      borderColor: colors.border,
+      padding: spacing.md,
+      marginBottom: spacing.md,
+    },
+    orderHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: spacing.sm,
+    },
+    orderLabel: {
+      fontSize: 16,
+      fontWeight: '700',
+      color: colors.text,
+    },
+    orderMeta: {
+      fontSize: 13,
+      color: colors.textSecondary,
+      marginTop: spacing.xs,
+    },
+    orderStatus: {
+      fontSize: 12,
+      fontWeight: '700',
+      color: colors.primary,
+      textTransform: 'uppercase',
+    },
+    orderTotal: {
+      fontSize: 20,
+      fontWeight: '700',
+      color: colors.text,
+      marginBottom: spacing.md,
+    },
+    trackingRow: {
+      gap: spacing.xs,
+    },
+    trackingStep: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.xs,
+    },
+    stepDot: {
+      width: 10,
+      height: 10,
+      borderRadius: 5,
+      backgroundColor: colors.primary,
+    },
+    stepText: {
+      fontSize: 13,
+      color: colors.textSecondary,
+    },
+    stepLine: {
+      flex: 1,
+      height: 1,
+      backgroundColor: colors.border,
+    },
+    emptyState: {
+      marginTop: spacing.lg,
+      alignItems: 'center',
+    },
+    emptyText: {
+      fontSize: 18,
+      fontWeight: '700',
+      color: colors.text,
+      marginTop: spacing.md,
+    },
+    emptySubtitle: {
+      fontSize: 14,
+      color: colors.textSecondary,
+      marginTop: spacing.xs,
+      textAlign: 'center',
+    },
+  });
+}

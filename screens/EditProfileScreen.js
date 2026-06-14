@@ -3,9 +3,11 @@ import { Alert, Image, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, Te
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 
-import { colors, spacing } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 
 export default function EditProfileScreen() {
+  const { colors, spacing } = useTheme();
+  const styles = createStyles(colors, spacing);
   const [profileImage, setProfileImage] = useState(null);
   const [name, setName] = useState('John Doe');
   const [email, setEmail] = useState('john.doe@email.com');
@@ -92,95 +94,98 @@ export default function EditProfileScreen() {
 
         <Pressable style={styles.saveButton} onPress={handleSave}>
           <Text style={styles.saveButtonText}>Save Changes</Text>
-          <Ionicons name="checkmark" size={20} color="#fff" />
+          <Ionicons name="checkmark" size={20} color={colors.onPrimary} />
         </Pressable>
       </ScrollView>
     </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  content: {
-    paddingHorizontal: spacing.md,
-    paddingBottom: spacing.lg,
-  },
-  headingRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: spacing.sm,
-    marginBottom: spacing.lg,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: colors.text,
-  },
-  subtitle: {
-    fontSize: 14,
-    color: colors.textSecondary,
-    marginTop: spacing.xs,
-  },
-  avatarCircle: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
-    backgroundColor: '#EFF6FF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'visible',
-  },
-  profileImage: {
-    width: '100%',
-    height: '100%',
-  },
-  addIcon: {
-    position: 'absolute',
-    right: -4,
-    bottom: -4,
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    backgroundColor: colors.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: colors.surface,
-  },
-  inputGroup: {
-    marginBottom: spacing.md,
-  },
-  inputLabel: {
-    fontSize: 13,
-    color: colors.textSecondary,
-    marginBottom: spacing.xs,
-  },
-  input: {
-    backgroundColor: colors.surface,
-    borderRadius: 14,
-    borderWidth: 1,
-    borderColor: colors.border,
-    padding: spacing.md,
-    fontSize: 15,
-    color: colors.text,
-  },
-  saveButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.sm,
-    marginTop: spacing.lg,
-    backgroundColor: colors.primary,
-    borderRadius: 14,
-    paddingVertical: spacing.md,
-  },
-  saveButtonText: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: '#fff',
-  },
-});
+function createStyles(colors, spacing) {
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
+    content: {
+      paddingHorizontal: spacing.md,
+      paddingBottom: spacing.lg,
+    },
+    headingRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginTop: spacing.sm,
+      marginBottom: spacing.lg,
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: '700',
+      color: colors.text,
+    },
+    subtitle: {
+      fontSize: 14,
+      color: colors.textSecondary,
+      marginTop: spacing.xs,
+    },
+    avatarCircle: {
+      width: 72,
+      height: 72,
+      borderRadius: 36,
+      backgroundColor: colors.muted,
+      alignItems: 'center',
+      justifyContent: 'center',
+      overflow: 'visible',
+    },
+    profileImage: {
+      width: '100%',
+      height: '100%',
+      borderRadius: 36,
+    },
+    addIcon: {
+      position: 'absolute',
+      right: -4,
+      bottom: -4,
+      width: 28,
+      height: 28,
+      borderRadius: 14,
+      backgroundColor: colors.primary,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: 2,
+      borderColor: colors.surface,
+    },
+    inputGroup: {
+      marginBottom: spacing.md,
+    },
+    inputLabel: {
+      fontSize: 13,
+      color: colors.textSecondary,
+      marginBottom: spacing.xs,
+    },
+    input: {
+      backgroundColor: colors.surface,
+      borderRadius: 14,
+      borderWidth: 1,
+      borderColor: colors.border,
+      padding: spacing.md,
+      fontSize: 15,
+      color: colors.text,
+    },
+    saveButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: spacing.sm,
+      marginTop: spacing.lg,
+      backgroundColor: colors.primary,
+      borderRadius: 14,
+      paddingVertical: spacing.md,
+    },
+    saveButtonText: {
+      fontSize: 16,
+      fontWeight: '700',
+      color: colors.onPrimary,
+    },
+  });
+}

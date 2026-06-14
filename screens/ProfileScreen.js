@@ -2,7 +2,7 @@ import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-nati
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 
-import { colors, spacing } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 
 const menuItems = [
   { id: '1', label: 'My Orders', icon: 'receipt-outline', route: 'Orders' },
@@ -13,6 +13,9 @@ const menuItems = [
 ];
 
 export default function ProfileScreen({ navigation }) {
+  const { colors, spacing } = useTheme();
+  const styles = createStyles(colors, spacing);
+
   const handleMenuPress = (route) => {
     navigation.navigate(route);
   };
@@ -80,131 +83,133 @@ export default function ProfileScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: colors.text,
-    paddingHorizontal: spacing.md,
-    paddingTop: spacing.sm,
-    marginBottom: spacing.md,
-  },
-  profileCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: colors.surface,
-    marginHorizontal: spacing.md,
-    padding: spacing.md,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  avatar: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    backgroundColor: '#EFF6FF',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  profileInfo: {
-    flex: 1,
-    marginLeft: spacing.md,
-  },
-  userName: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: colors.text,
-  },
-  userEmail: {
-    fontSize: 14,
-    color: colors.textSecondary,
-    marginTop: 2,
-  },
-  editButton: {
-    padding: spacing.sm,
-  },
-  statsRow: {
-    flexDirection: 'row',
-    marginHorizontal: spacing.md,
-    marginTop: spacing.md,
-    gap: spacing.sm,
-  },
-  statCard: {
-    flex: 1,
-    backgroundColor: colors.surface,
-    borderRadius: 12,
-    padding: spacing.md,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  statValue: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: colors.primary,
-  },
-  statLabel: {
-    fontSize: 12,
-    color: colors.textSecondary,
-    marginTop: 2,
-  },
-  menuSection: {
-    marginHorizontal: spacing.md,
-    marginTop: spacing.lg,
-    backgroundColor: colors.surface,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: colors.border,
-    overflow: 'hidden',
-  },
-  menuItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-  },
-  menuLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.md,
-  },
-  menuIcon: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: '#EFF6FF',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  menuLabel: {
-    fontSize: 15,
-    fontWeight: '500',
-    color: colors.text,
-  },
-  logoutButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing.sm,
-    marginHorizontal: spacing.md,
-    marginTop: spacing.lg,
-    marginBottom: spacing.xl,
-    padding: spacing.md,
-    backgroundColor: '#FEF2F2',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#FECACA',
-  },
-  logoutText: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: colors.danger,
-  },
-});
+function createStyles(colors, spacing) {
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: '700',
+      color: colors.text,
+      paddingHorizontal: spacing.md,
+      paddingTop: spacing.sm,
+      marginBottom: spacing.md,
+    },
+    profileCard: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: colors.surface,
+      marginHorizontal: spacing.md,
+      padding: spacing.md,
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    avatar: {
+      width: 64,
+      height: 64,
+      borderRadius: 32,
+      backgroundColor: colors.muted,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    profileInfo: {
+      flex: 1,
+      marginLeft: spacing.md,
+    },
+    userName: {
+      fontSize: 18,
+      fontWeight: '700',
+      color: colors.text,
+    },
+    userEmail: {
+      fontSize: 14,
+      color: colors.textSecondary,
+      marginTop: 2,
+    },
+    editButton: {
+      padding: spacing.sm,
+    },
+    statsRow: {
+      flexDirection: 'row',
+      marginHorizontal: spacing.md,
+      marginTop: spacing.md,
+      gap: spacing.sm,
+    },
+    statCard: {
+      flex: 1,
+      backgroundColor: colors.surface,
+      borderRadius: 12,
+      padding: spacing.md,
+      alignItems: 'center',
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    statValue: {
+      fontSize: 20,
+      fontWeight: '700',
+      color: colors.primary,
+    },
+    statLabel: {
+      fontSize: 12,
+      color: colors.textSecondary,
+      marginTop: 2,
+    },
+    menuSection: {
+      marginHorizontal: spacing.md,
+      marginTop: spacing.lg,
+      backgroundColor: colors.surface,
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: colors.border,
+      overflow: 'hidden',
+    },
+    menuItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      padding: spacing.md,
+      borderBottomWidth: 1,
+      borderBottomColor: colors.border,
+    },
+    menuLeft: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.md,
+    },
+    menuIcon: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+      backgroundColor: colors.muted,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    menuLabel: {
+      fontSize: 15,
+      fontWeight: '500',
+      color: colors.text,
+    },
+    logoutButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: spacing.sm,
+      marginHorizontal: spacing.md,
+      marginTop: spacing.lg,
+      marginBottom: spacing.xl,
+      padding: spacing.md,
+      backgroundColor: colors.dangerBackground,
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: colors.danger,
+    },
+    logoutText: {
+      fontSize: 15,
+      fontWeight: '600',
+      color: colors.danger,
+    },
+  });
+}

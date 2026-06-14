@@ -2,11 +2,14 @@ import { useState } from 'react';
 import { SafeAreaView, StyleSheet, Switch, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import { colors, spacing } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 
 export default function SettingsScreen() {
-  const [darkMode, setDarkMode] = useState(false);
+  const { colors, spacing, isDarkMode, setDarkMode } = useTheme();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+  
+  // ✅ Call the factory function here
+  const styles = createStyles(colors, spacing); 
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
@@ -21,10 +24,10 @@ export default function SettingsScreen() {
             <Text style={styles.optionSubtitle}>Switch the app theme</Text>
           </View>
           <Switch
-            value={darkMode}
+            value={isDarkMode}
             onValueChange={setDarkMode}
             trackColor={{ false: colors.border, true: colors.primary }}
-            thumbColor={darkMode ? '#fff' : '#fff'}
+            thumbColor={colors.surface}
           />
         </View>
       </View>
@@ -41,7 +44,7 @@ export default function SettingsScreen() {
             value={notificationsEnabled}
             onValueChange={setNotificationsEnabled}
             trackColor={{ false: colors.border, true: colors.primary }}
-            thumbColor={notificationsEnabled ? '#fff' : '#fff'}
+            thumbColor={colors.surface}
           />
         </View>
       </View>
@@ -49,54 +52,56 @@ export default function SettingsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: colors.text,
-    paddingHorizontal: spacing.md,
-    paddingTop: spacing.sm,
-    marginBottom: spacing.md,
-  },
-  optionCard: {
-    backgroundColor: colors.surface,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: colors.border,
-    marginHorizontal: spacing.md,
-    marginBottom: spacing.md,
-    padding: spacing.md,
-  },
-  optionRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: spacing.md,
-  },
-  optionIcon: {
-    width: 44,
-    height: 44,
-    borderRadius: 12,
-    backgroundColor: '#EFF6FF',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  optionText: {
-    flex: 1,
-    marginLeft: spacing.sm,
-  },
-  optionTitle: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: colors.text,
-  },
-  optionSubtitle: {
-    fontSize: 13,
-    color: colors.textSecondary,
-    marginTop: spacing.xs,
-  },
-});
+function createStyles(colors, spacing) {
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: '700',
+      color: colors.text,
+      paddingHorizontal: spacing.md,
+      paddingTop: spacing.sm,
+      marginBottom: spacing.md,
+    },
+    optionCard: {
+      backgroundColor: colors.surface,
+      borderRadius: 16,
+      borderWidth: 1,
+      borderColor: colors.border,
+      marginHorizontal: spacing.md,
+      marginBottom: spacing.md,
+      padding: spacing.md,
+    },
+    optionRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: spacing.md,
+    },
+    optionIcon: {
+      width: 44,
+      height: 44,
+      borderRadius: 12,
+      backgroundColor: colors.muted,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    optionText: {
+      flex: 1,
+      marginLeft: spacing.sm,
+    },
+    optionTitle: {
+      fontSize: 16,
+      fontWeight: '700',
+      color: colors.text,
+    },
+    optionSubtitle: {
+      fontSize: 13,
+      color: colors.textSecondary,
+      marginTop: spacing.xs,
+    },
+  });
+}

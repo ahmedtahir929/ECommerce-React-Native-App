@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import ProductCard from '../components/ProductCard';
 import { useCart } from '../context/CartContext';
-import { colors, spacing } from '../constants/theme';
+import { useTheme } from '../context/ThemeContext';
 import { products } from '../data/products';
 
 const deals = products
@@ -16,6 +16,8 @@ const deals = products
 
 export default function DealsScreen() {
   const { addToCart } = useCart();
+  const { colors, spacing } = useTheme();
+  const styles = createStyles(colors, spacing);
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
@@ -43,7 +45,7 @@ export default function DealsScreen() {
           <View style={styles.productWrapper}>
             <ProductCard product={item} onAddToCart={addToCart} flatBottom />
             <View style={styles.dealLabel}>
-              <Ionicons name="sparkles" size={12} color="#fff" />
+              <Ionicons name="sparkles" size={12} color={colors.surface} />
               <Text style={styles.dealLabelText}>{item.label}</Text>
             </View>
           </View>
@@ -53,80 +55,82 @@ export default function DealsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: spacing.md,
-    paddingTop: spacing.sm,
-  },
-  subtle: {
-    fontSize: 14,
-    color: colors.textSecondary,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: colors.text,
-    marginTop: 4,
-  },
-  banner: {
-    margin: spacing.md,
-    padding: spacing.sm,
-    borderRadius: 10,
-    backgroundColor: '#EFF6FF',
-    borderWidth: 1,
-    borderColor: colors.border,
-  },
-  bannerTitle: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: colors.primary,
-  },
-  bannerSubtitle: {
-    fontSize: 14,
-    color: colors.textSecondary,
-    marginTop: spacing.xs,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: colors.text,
-    paddingHorizontal: spacing.md,
-    marginTop: spacing.sm,
-    marginBottom: spacing.sm,
-  },
-  productList: {
-    paddingHorizontal: spacing.md,
-    paddingBottom: spacing.lg,
-  },
-  productRow: {
-    gap: spacing.md,
-  },
-  productWrapper: {
-    flex: 1,
-    marginBottom: spacing.md,
-  },
-  dealLabel: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    marginTop: -spacing.md,
-    paddingHorizontal: spacing.sm,
-    paddingVertical: spacing.xs,
-    backgroundColor: colors.primary,
-    borderBottomLeftRadius: 12,
-    borderBottomRightRadius: 12,
-    justifyContent: 'center',
-  },
-  dealLabelText: {
-    color: '#fff',
-    fontSize: 11,
-    fontWeight: '700',
-  },
-});
+function createStyles(colors, spacing) {
+  return StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
+    header: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingHorizontal: spacing.md,
+      paddingTop: spacing.sm,
+    },
+    subtle: {
+      fontSize: 14,
+      color: colors.textSecondary,
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: '700',
+      color: colors.text,
+      marginTop: 4,
+    },
+    banner: {
+      margin: spacing.md,
+      padding: spacing.sm,
+      borderRadius: 10,
+      backgroundColor: colors.muted,
+      borderWidth: 1,
+      borderColor: colors.border,
+    },
+    bannerTitle: {
+      fontSize: 20,
+      fontWeight: '700',
+      color: colors.primary,
+    },
+    bannerSubtitle: {
+      fontSize: 14,
+      color: colors.textSecondary,
+      marginTop: spacing.xs,
+    },
+    sectionTitle: {
+      fontSize: 18,
+      fontWeight: '700',
+      color: colors.text,
+      paddingHorizontal: spacing.md,
+      marginTop: spacing.sm,
+      marginBottom: spacing.sm,
+    },
+    productList: {
+      paddingHorizontal: spacing.md,
+      paddingBottom: spacing.lg,
+    },
+    productRow: {
+      gap: spacing.md,
+    },
+    productWrapper: {
+      flex: 1,
+      marginBottom: spacing.md,
+    },
+    dealLabel: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 6,
+      marginTop: -spacing.md,
+      paddingHorizontal: spacing.sm,
+      paddingVertical: spacing.xs,
+      backgroundColor: colors.primary,
+      borderBottomLeftRadius: 12,
+      borderBottomRightRadius: 12,
+      justifyContent: 'center',
+    },
+    dealLabelText: {
+      color: colors.surface,
+      fontSize: 11,
+      fontWeight: '700',
+    },
+  });
+}

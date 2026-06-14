@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
 import { useCart } from "../context/CartContext";
+import { useTheme } from "../context/ThemeContext";
 
 import HomeScreen from "../screens/HomeScreen";
 import DealsScreen from "../screens/DealsScreen";
@@ -45,6 +46,7 @@ function TabIcon({ route, focused, color, size }) {
 
 export default function MainTab() {
   const { totalItems } = useCart();
+  const { colors } = useTheme();
 
   return (
     <Tab.Navigator
@@ -53,13 +55,13 @@ export default function MainTab() {
           <TabIcon route={route} focused={focused} color={color} size={size} />
         ),
 
-        tabBarActiveTintColor: "#2563EB",
-        tabBarInactiveTintColor: "#64748B",
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.textSecondary,
 
         tabBarStyle: {
-          backgroundColor: "#fff",
+          backgroundColor: colors.surface,
           borderTopWidth: 1,
-          borderTopColor: "#E2E8F0",
+          borderTopColor: colors.border,
           paddingTop: 4,
           height: 60,
         },
